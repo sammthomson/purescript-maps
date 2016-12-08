@@ -20,6 +20,7 @@ module Data.Map
   , fromFoldableWith
   , toList
   , toUnfoldable
+  , oldToUnfoldable
   , delete
   , pop
   , member
@@ -370,6 +371,18 @@ toList :: forall k v. Map k v -> List (Tuple k v)
 toList Leaf = Nil
 toList (Two left k v right) = toList left <> Tuple k v : toList right
 toList (Three left k1 v1 mid k2 v2 right) = toList left <> Tuple k1 v1 : toList mid <> Tuple k2 v2 : toList right
+
+
+
+oldToUnfoldable :: forall f k v. (Ord k, Unfoldable f) => Map k v -> f (Tuple k v)
+oldToUnfoldable = unfoldr go
+  where
+  go :: Map k v -> Maybe (Tuple (Tuple k v) (Map k v))
+  go Leaf = Nothing
+  go (Two left k v right) = Just $ Tuple (Tuple k v) (left <> right)
+  go (Three left k1 v1 mid k2 v2 right) =
+    Just $ Tuple (Tuple k1 v1) (insert k2 v2 (left <> mid <> right))
+
 
 -- | Convert a map to an unfoldable structure of key/value pairs
 toUnfoldable :: forall f k v. Unfoldable f => Map k v -> f (Tuple k v)

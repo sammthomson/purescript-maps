@@ -24,9 +24,12 @@
     "purescript-arrays": "^3.0.0",
     "purescript-functions": "^2.0.0",
     "purescript-lists": "^3.0.0",
-    "purescript-st": "^2.0.0"
+    "purescript-st": "^2.0.0",
+    "purescript-benchotron": "^5.0.0",
+    "benchmark": "^2.1.2"
   },
   "devDependencies": {
-    "purescript-quickcheck": "^3.0.0"
+    "purescript-quickcheck": "^3.0.0",
+    "purescript-psci-support": "^2.0.0"
   }
 }
